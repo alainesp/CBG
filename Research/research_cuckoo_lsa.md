@@ -184,7 +184,7 @@ The **Least-Loaded (LL)** strategy provides the fastest convergence; but all con
 
 We are not only interested in table load, but also in other metrics. The average label **l<sub>avg</sub>** is one of them. We test different **l<sub>max</sub>** values in Figure 1 with the same `(2,4)`-scheme with 10<sup>5</sup> bins.
 
-![Work done](/imgs/strategies_work_done.png)
+![Work done](imgs/strategies_work_done.png)
 
 **Figure 1**: Comparing average label by tie-breaking strategies
 
@@ -192,7 +192,7 @@ We can see that **l<sub>avg</sub>** is similar for similar table load independen
 
 We measure how efficient each strategy are by checking table load at average moves per item. An item is moved when is kicked-out of a position in a bucket. Figure 2 show data for the `(2,4)`-scheme with 10<sup>5</sup> bins.
 
-![Work done](/imgs/strategies_table_use_per_moves.png)
+![Work done](imgs/strategies_table_use_per_moves.png)
 
 **Figure 2**: Comparing work done by tie-breaking strategies
 
@@ -200,7 +200,7 @@ Again the **Least-Loaded (LL)** strategy is the more efficient with **LL_Global*
 
 We now try common schemes of cuckoo hashing to see how they behaves in figure 3, again with 10<sup>5</sup> bins.
 
-![Compare schemes](/imgs/compare_schemes.png)
+![Compare schemes](imgs/compare_schemes.png)
 
 **Figure 3**: Table load of common cuckoo schemes given **l<sub>max</sub>**
 
@@ -208,7 +208,7 @@ All schemes appear to exhibit similar behavior: a `very small constant` (`<7`) *
 
 The variance (`average_value - minimum_value`) is similar to table 2, but we perform an additional experiment. We check how table load is distributed again distances to the average value. We repeat the process `10 000` times for the different schemes in figure 4. We use the **l<sub>max</sub>** values of table 3.
 
-![Schemes errors](/imgs/schemes_errors.png)
+![Schemes errors](imgs/schemes_errors.png)
 
 **Figure 4**: Distribution of table load given distances to the average.
 
@@ -220,7 +220,7 @@ From this experiments we can produce the following proposition:
 
 We are interested in how much *constant* **l<sub>max</sub>** really is, as it theoretically may depend on the table size `n`. We try the `(2,4)`-scheme with different table sizes in figure 5. It shows that for all practical choices of `n` (until 1 billion in this test) we can choose a *very small* **l<sub>max</sub>** (in this case `3` or `4`) that is practically independent of `n`. For example for **l<sub>max</sub> = 3** the drop in table load was `1%` when comparing 10<sup>2</sup> to 10<sup>9</sup>. With **l<sub>max</sub> = 4** the drop is only `0.45%`. We can expect to handle trillions of elements and continue to consider **l<sub>max</sub>** a *constant*.
 
-![Compare schemes](/imgs/table_use_by_table_size.png)
+![Compare schemes](imgs/table_use_by_table_size.png)
 
 **Figure 5**: Table load by table size given different **l<sub>max</sub>**
 
@@ -234,7 +234,7 @@ For the `(2,4)`-scheme this is `4.5 kb`, witch is reasonable. Note that this imp
 
 We implement the `(2,4)`-scheme with a lookup table and compare the performance with `Random Walk` for different table load in figure 6.
 
-![Compare schemes](/imgs/insertion_time.png)
+![Compare schemes](imgs/insertion_time.png)
 
 **Figure 6**: Comparing insertion time for `(2,4)`-scheme with 10<sup>5</sup> elements
 

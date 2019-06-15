@@ -8,7 +8,7 @@ Alain Espinosa <alainesp@gmail.com>
 
 `Last Edited: Nov 23, 2018` (version 0.1 - consider it *alpha* version or *1st DRAFT*)
 
-**Note: For production code you can use [cbg.hpp](cbg.hpp) in this same repository. Samples are in [cbg_sample.cpp](cbg_sample.cpp).**
+**Note: For production code you can use [cbg.hpp](/cbg.hpp) in this same repository. Samples are in [cbg_sample.cpp](/cbg_sample.cpp).**
 
 ### Abstract
 
@@ -66,7 +66,7 @@ We conceptually use two tables, a **metadata** table were we store additional in
 
 Normally the window used to place and lookup items is static or only oriented forward. We use a window that can dynamically *slide* around the **entry bin** (fig 2). It can be easily seen that the number of possible *slide* positions for the window anchored on the **entry bin** is `l`. In this paper we only use two *sliding* positions: forward and backward (or reverse) (fig 2) because it provides the best tradeoff between benefits/costs. The option to use more *sliding* positions is leave out for a future research.
 
-![Anchored Sliding Window](/imgs/cbg_sliding.png)
+![Anchored Sliding Window](imgs/cbg_sliding.png)
 
 **Figure 2**: Anchored Sliding Window
 
@@ -169,7 +169,7 @@ Table 2: *Load threshold* for different cuckoos tables/window size
 
 We focus now on the number of memory regions accessed on lookup. We characterize this by two metrics: the number of **primary elements** (elements that are placed in their primary bucket) and the number of **lucky buckets** (*primary* buckets with no element in a secondary bucket). This metrics affect the performance of positive and negative queries respectively. This metrics vary with table load and are similar in value. We show the **primary elements** metric in figure 3.
 
-![Primary Elements](/imgs/cbg_primary_by_table_use.png)
+![Primary Elements](imgs/cbg_primary_by_table_use.png)
 
 **Figure 3**: Primary elements percent by table load for different values of `l`.
 
@@ -198,7 +198,7 @@ We check the insertion time per element (fig 4). The curve is similar to other c
 
 For hash tables when the maximum number of items is known, inserting up-to the maximum load is reasonable. But if you don't know this beforehand then it is probably better to grow the table when reaching **94%** (or less) by a small grow factor.
 
-![Insertion time](/imgs/cbg_insertion_time.png)
+![Insertion time](imgs/cbg_insertion_time.png)
 
 **Figure 4**: Insertion time by table load for different values of `l`.
 
