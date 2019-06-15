@@ -58,7 +58,7 @@ Continuing with the bird metaphor, instead of a disjoint set of nests (blocked c
 
 We conceptually use two tables, a **metadata** table were we store additional information about buckets and items: **LSA<sub>max</sub>** labels, **unlucky Buckets trace**, buckets orientation plus other details and the other table containing the bins with the elements. Figure 1 show the general layout of our hash table. We call the bin that is selected by the hash function as the **entry bin** of the bucket and is colored in figure 1.
 
-![Cuckoo Breeding Ground](/imgs/cbg_general.png)
+![Cuckoo Breeding Ground](imgs/cbg_general.png)
 
 **Figure 1**: General layout of **CBG**
 
