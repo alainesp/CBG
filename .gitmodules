@@ -1,0 +1,6 @@
+[submodule "comparison/flat_hash_map"]
+	path = comparison/flat_hash_map
+	url = https://github.com/skarupke/flat_hash_map.git
+[submodule "comparison/abseil-cpp"]
+	path = comparison/abseil-cpp
+	url = https://github.com/abseil/abseil-cpp.git
