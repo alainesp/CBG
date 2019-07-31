@@ -18,31 +18,43 @@ subtitle = ""
   icon = "tachometer-alt"
   icon_pack = "fas"
   name = "Fast"
-  description = "TODO Fast%"  
+  description = "TODO..."  
   
 [[feature]]
   icon = "file-archive"
   icon_pack = "fas"
   name = "High Load"
-  description = "Achieve near Perfect Hash Table load. As high as `99.99%` with very small drop in performance."
+  description = "Achieve near [Perfect Hash Table](https://sourcethemes.com/academic/) load: up to `99.99%`. Practical use of `99%` with a very small drop in performance (TODO quantify it)."
 
 [[feature]]
   icon = "compress-arrows-alt"
   icon_pack = "fas"
-  name = "Trim"
+  name = "Slim"
   description = "2 bytes per element overhead"
+
+[[feature]]
+  icon = "toolbox" # TODO
+  icon_pack = "fas"
+  name = "Custom Size"
+  description = "Support any size, not only power of two"
+
+[[feature]]
+  icon = "toolbox" # TODO
+  icon_pack = "fas"
+  name = "Fast grow"
+  description = "The growing process is very fast using minimal additional memory (TODO: quantify)"
 
 [[feature]]
   icon = "toolbox"
   icon_pack = "fas"
   name = "Versatile"
-  description = "TODO Fast%"
+  description = "TODO..."
 
 [[feature]]
   icon = "file-export"
   icon_pack = "fas"
   name = "Single-Header"
-  description = "All code can be found TODO"
+  description = "Convenient single-header implementation for easy deployment."
 
 [[feature]]
   icon = "book-open"
@@ -54,12 +66,12 @@ subtitle = ""
   icon = "globe-americas"
   icon_pack = "fas"
   name = "Cross-Platform"
-  description = "Windows, Linux, ..."  
+  description = "Currently Windows x64 MSVC."  
 
 [[feature]]
   icon = "balance-scale"
   icon_pack = "fas"
   name = "STD-Compatible"
-  description = "TODO Fast%"
+  description = "Compatible with C++11 unordered containers."
 
 +++

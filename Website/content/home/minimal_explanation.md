@@ -47,4 +47,4 @@ subtitle = "Cuckoo Breeding Ground"
  css_class = ""
 +++
 
-**CBG** is a fast and versatile hash table based on [cuckoo hashing](https://en.wikipedia.org/wiki/Cuckoo_hashing). It fix the main performance weakness of cuckoo hashing (various random memory access), mixing some less popular options together with a couple of novel ideas. A detailed information can be found in our [research](#featured).
+**CBG** is a fast and versatile hash table based on [cuckoo hashing](https://en.wikipedia.org/wiki/Cuckoo_hashing). It fixes the main performance weakness of cuckoo hashing (various random memory access), mixing some less popular options together with a couple of novel ideas. A detailed information can be found in our [research](#featured).
