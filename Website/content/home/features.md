@@ -24,19 +24,19 @@ subtitle = ""
   icon = "file-archive"
   icon_pack = "fas"
   name = "High Load"
-  description = "Achieve near [Perfect Hash Table](https://sourcethemes.com/academic/) load: up to `99.99%`. Practical use of `99%` with a very small drop in performance (TODO quantify it)."
+  description = "Up to `99.99%`. Practical use of `99%` with a very small drop in performance (TODO quantify it)."
 
 [[feature]]
   icon = "compress-arrows-alt"
   icon_pack = "fas"
   name = "Slim"
-  description = "2 bytes per element overhead"
+  description = "`2 bytes` per element overhead."
 
 [[feature]]
   icon = "toolbox" # TODO
   icon_pack = "fas"
   name = "Custom Size"
-  description = "Support any size, not only power of two"
+  description = "Support any size, not only powers of two."
 
 [[feature]]
   icon = "toolbox" # TODO

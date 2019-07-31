@@ -18,7 +18,7 @@ organizations:
   url: "https://hashsuite.openwall.net/"
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include software performance optimization, password security, DSP and ultrasonic communications.
+bio: My research interests include software performance, password security, DSP and ultrasonic communications.
 
 interests:
 - C++
