@@ -4,3 +4,6 @@
 [submodule "comparison/abseil-cpp"]
 	path = comparison/abseil-cpp
 	url = https://github.com/abseil/abseil-cpp.git
+[submodule "comparison/benchmark"]
+	path = comparison/benchmark
+	url = https://github.com/google/benchmark.git

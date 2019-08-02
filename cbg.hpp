@@ -1253,7 +1253,7 @@ protected:
 				METADATA::Set_Bucket_Reversed(num_buckets - 1 - i);
 
 			// Moves items from old end to new end
-			for (size_t i = old_num_buckets - 1; i > 0; i--)
+			for (int64_t i = old_num_buckets - 1; i > 0; i--)
 			{
 				if (!METADATA::Is_Empty(i))
 				{
@@ -1781,8 +1781,9 @@ public:
 		METADATA::Clear(0, num_buckets);
 
 		// Last buckets are always reversed
-		for (size_t i = 0; i < (NUM_ELEMS_BUCKET - 1); i++)
-			METADATA::Set_Bucket_Reversed(num_buckets - 1 - i);
+		if(num_buckets >= (NUM_ELEMS_BUCKET - 1))
+			for (size_t i = 0; i < (NUM_ELEMS_BUCKET - 1); i++)
+				METADATA::Set_Bucket_Reversed(num_buckets - 1 - i);
 
 		/*for (size_t i = NUM_ELEMS_BUCKET - 1; i < num_buckets; i++)
 			if (METADATA::Benefit_With_Reversal(i, NUM_ELEMS_BUCKET))
