@@ -34,3 +34,4 @@
 /.vs
 /Website/resources
 out
+/CMakeSettings.json

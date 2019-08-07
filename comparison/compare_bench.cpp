@@ -135,58 +135,74 @@ template<size_t T> using AoS = cbg::Set_AoS<T, uint64_t>;
 template<size_t T> using AoB = cbg::Set_AoB<T, uint64_t>;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+// Params
+////////////////////////////////////////////////////////////////////////////////////////////////
+constexpr int64_t endSize = 2 << 21;//2 << 27;
+//#define BENCH_COMPETITORS
+#define BENCH_SoA
+//#define BENCH_AoS
+//#define BENCH_AoB
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 // Table load = 50%
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// Insertion
-BENCHMARK_TEMPLATE(Insertion, stduno, 50)->Range(64, 2 << 24/*27*/);
-BENCHMARK_TEMPLATE(Insertion, bytell, 50)->Range(64, 2 << 24/*27*/);
-BENCHMARK_TEMPLATE(Insertion, abseil, 50, -1)->Range(64, 2 << 24/*27*/);
-
-BENCHMARK_TEMPLATE(Insertion, SoA<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(Insertion, SoA<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(Insertion, SoA<4>, 50)->Range(64, 2 << 24/*27*/);
-
-//BENCHMARK_TEMPLATE(Insertion, AoS<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(Insertion, AoS<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(Insertion, AoS<4>, 50)->Range(64, 2 << 24/*27*/);
-
-//BENCHMARK_TEMPLATE(Insertion, AoB<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(Insertion, AoB<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(Insertion, AoB<4>, 50)->Range(64, 2 << 24/*27*/);
-
+#ifdef BENCH_COMPETITORS
+// Insertion ==============================================================
+BENCHMARK_TEMPLATE(Insertion, stduno, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(Insertion, bytell, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(Insertion, abseil, 50, -1)->Range(64, endSize);
 // Positive lookup ========================================================
-BENCHMARK_TEMPLATE(PositiveLookup, stduno, 50)->Range(64, 2 << 24/*27*/);
-BENCHMARK_TEMPLATE(PositiveLookup, bytell, 50)->Range(64, 2 << 24/*27*/);
-BENCHMARK_TEMPLATE(PositiveLookup, abseil, 50, -1)->Range(64, 2 << 24/*27*/);
-
-BENCHMARK_TEMPLATE(PositiveLookup, SoA<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(PositiveLookup, SoA<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(PositiveLookup, SoA<4>, 50)->Range(64, 2 << 24/*27*/);
-
-//BENCHMARK_TEMPLATE(PositiveLookup, AoS<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(PositiveLookup, AoS<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(PositiveLookup, AoS<4>, 50)->Range(64, 2 << 24/*27*/);
-
-//BENCHMARK_TEMPLATE(PositiveLookup, AoB<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(PositiveLookup, AoB<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(PositiveLookup, AoB<4>, 50)->Range(64, 2 << 24/*27*/);
-
+BENCHMARK_TEMPLATE(PositiveLookup, stduno, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(PositiveLookup, bytell, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(PositiveLookup, abseil, 50, -1)->Range(64, endSize);
 // Negative lookup ========================================================
-BENCHMARK_TEMPLATE(NegativeLookup, stduno, 50)->Range(64, 2 << 24/*27*/);
-BENCHMARK_TEMPLATE(NegativeLookup, bytell, 50)->Range(64, 2 << 24/*27*/);
-BENCHMARK_TEMPLATE(NegativeLookup, abseil, 50, -1)->Range(64, 2 << 24/*27*/);
+BENCHMARK_TEMPLATE(NegativeLookup, stduno, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(NegativeLookup, bytell, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(NegativeLookup, abseil, 50, -1)->Range(64, endSize);
+#endif
+#ifdef BENCH_SoA
+// Insertion ==============================================================
+BENCHMARK_TEMPLATE(Insertion, SoA<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(Insertion, SoA<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(Insertion, SoA<4>, 50)->Range(64, endSize);
+// Positive lookup ========================================================
+BENCHMARK_TEMPLATE(PositiveLookup, SoA<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(PositiveLookup, SoA<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(PositiveLookup, SoA<4>, 50)->Range(64, endSize);
+// Negative lookup ========================================================
+BENCHMARK_TEMPLATE(NegativeLookup, SoA<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(NegativeLookup, SoA<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(NegativeLookup, SoA<4>, 50)->Range(64, endSize);
+#endif
+#ifdef BENCH_AoS
+// Insertion ==============================================================
+BENCHMARK_TEMPLATE(Insertion, AoS<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(Insertion, AoS<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(Insertion, AoS<4>, 50)->Range(64, endSize);
+// Positive lookup ========================================================
+BENCHMARK_TEMPLATE(PositiveLookup, AoS<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(PositiveLookup, AoS<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(PositiveLookup, AoS<4>, 50)->Range(64, endSize);
+// Negative lookup ========================================================
+BENCHMARK_TEMPLATE(NegativeLookup, AoS<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(NegativeLookup, AoS<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(NegativeLookup, AoS<4>, 50)->Range(64, endSize);
+#endif
+#ifdef BENCH_AoB
+// Insertion ==============================================================
+BENCHMARK_TEMPLATE(Insertion, AoB<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(Insertion, AoB<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(Insertion, AoB<4>, 50)->Range(64, endSize);
+// Positive lookup ========================================================
+BENCHMARK_TEMPLATE(PositiveLookup, AoB<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(PositiveLookup, AoB<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(PositiveLookup, AoB<4>, 50)->Range(64, endSize);
+// Negative lookup ========================================================
+BENCHMARK_TEMPLATE(NegativeLookup, AoB<2>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(NegativeLookup, AoB<3>, 50)->Range(64, endSize);
+BENCHMARK_TEMPLATE(NegativeLookup, AoB<4>, 50)->Range(64, endSize);
+#endif
 
-BENCHMARK_TEMPLATE(NegativeLookup, SoA<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(NegativeLookup, SoA<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(NegativeLookup, SoA<4>, 50)->Range(64, 2 << 24/*27*/);
-
-//BENCHMARK_TEMPLATE(NegativeLookup, AoS<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(NegativeLookup, AoS<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(NegativeLookup, AoS<4>, 50)->Range(64, 2 << 24/*27*/);
-
-//BENCHMARK_TEMPLATE(NegativeLookup, AoB<2>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(NegativeLookup, AoB<3>, 50)->Range(64, 2 << 24/*27*/);
-//BENCHMARK_TEMPLATE(NegativeLookup, AoB<4>, 50)->Range(64, 2 << 24/*27*/);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Table load = 85%
