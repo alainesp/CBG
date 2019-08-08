@@ -16,17 +16,10 @@
 #include "abseil-cpp/absl/container/flat_hash_set.h"
 #include "abseil-cpp/absl/container/flat_hash_map.h"
 
-// Utility
-static uint64_t getRandomSeed()
-{
-	std::random_device good_random;
-	return good_random();
-}
-
 // Functions to benchmark
 template <class HT, int64_t PERCENT, int64_t sumFix = 0> void Insertion(benchmark::State& state) {
 	// Perform setup here
-	std::mt19937_64 r(getRandomSeed());
+	cbg::wyrand r;
 
 	// Create the hash table to benchmark
 	HT hashTable(state.range(0) + sumFix);
@@ -40,7 +33,7 @@ template <class HT, int64_t PERCENT, int64_t sumFix = 0> void Insertion(benchmar
 		hashTable.insert(r());
 
 	if(hashTable.bucket_count() != (state.range(0) + sumFix))
-		printf("\nError\n");
+		abort();
 	hashTable.clear();
 
 	for (auto _ : state) {
@@ -52,12 +45,12 @@ template <class HT, int64_t PERCENT, int64_t sumFix = 0> void Insertion(benchmar
 	}
 
 	// Insertions per second
-	state.counters["insertions"] = benchmark::Counter(static_cast<double>(fillTo), benchmark::Counter::kIsIterationInvariantRate);
+	state.counters["operations"] = benchmark::Counter(static_cast<double>(fillTo), benchmark::Counter::kIsIterationInvariantRate);
 }
 template <class HT, int64_t PERCENT, int64_t sumFix = 0> void PositiveLookup(benchmark::State& state) {
 	// Perform setup here
-	uint64_t seed = getRandomSeed();
-	std::mt19937_64 r(seed);
+	cbg::wyrand r;
+	uint64_t seed = r.seed;
 
 	// Create the hash table to benchmark
 	HT hashTable(state.range(0) + sumFix);
@@ -71,11 +64,11 @@ template <class HT, int64_t PERCENT, int64_t sumFix = 0> void PositiveLookup(ben
 		hashTable.insert(r());
 
 	if (hashTable.bucket_count() != (state.range(0) + sumFix))
-		printf("\nError\n");
+		abort();
 
 	for (auto _ : state) {
 		// This code gets timed
-		r = std::mt19937_64(seed);
+		r.seed = seed;
 		size_t count = 0;
 
 		for (size_t i = 0; i < fillTo; i++)
@@ -83,15 +76,15 @@ template <class HT, int64_t PERCENT, int64_t sumFix = 0> void PositiveLookup(ben
 				count++;
 
 		if(count != fillTo)
-			printf("\nError\n");
+			abort();
 	}
 
 	// Positive lookup per second
-	state.counters["positive"] = benchmark::Counter(static_cast<double>(fillTo), benchmark::Counter::kIsIterationInvariantRate);
+	state.counters["operations"] = benchmark::Counter(static_cast<double>(fillTo), benchmark::Counter::kIsIterationInvariantRate);
 }
 template <class HT, int64_t PERCENT, int64_t sumFix = 0> void NegativeLookup(benchmark::State & state) {
 	// Perform setup here
-	std::mt19937_64 r(getRandomSeed());
+	cbg::wyrand r;
 
 	// Create the hash table to benchmark
 	HT hashTable(state.range(0) + sumFix);
@@ -105,7 +98,7 @@ template <class HT, int64_t PERCENT, int64_t sumFix = 0> void NegativeLookup(ben
 		hashTable.insert(r());
 
 	if (hashTable.bucket_count() != (state.range(0) + sumFix))
-		printf("\nError\n");
+		abort();
 
 	for (auto _ : state) {
 		// This code gets timed
@@ -116,19 +109,19 @@ template <class HT, int64_t PERCENT, int64_t sumFix = 0> void NegativeLookup(ben
 				count++;
 
 		if (count)
-			printf("\nError\n");
+			abort();
 	}
 
 	// Negative lookup per second
-	state.counters["negative"] = benchmark::Counter(static_cast<double>(fillTo), benchmark::Counter::kIsIterationInvariantRate);
+	state.counters["operations"] = benchmark::Counter(static_cast<double>(fillTo), benchmark::Counter::kIsIterationInvariantRate);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Simplify printing
 ////////////////////////////////////////////////////////////////////////////////////////////////
-using stduno = std::unordered_set<uint64_t, cbg::hashing::t1ha2<uint64_t>>;
-using bytell = ska::bytell_hash_set<uint64_t, cbg::hashing::t1ha2<uint64_t>>;
-using abseil = absl::flat_hash_set<uint64_t, cbg::hashing::t1ha2<uint64_t>>;
+using stduno = std::unordered_set<uint64_t, cbg::hashing::wyhash<uint64_t>>;
+using bytell = ska::bytell_hash_set<uint64_t, cbg::hashing::wyhash<uint64_t>>;
+using abseil = absl::flat_hash_set<uint64_t, cbg::hashing::wyhash<uint64_t>>;
 
 template<size_t T> using SoA = cbg::Set_SoA<T, uint64_t>;
 template<size_t T> using AoS = cbg::Set_AoS<T, uint64_t>;
