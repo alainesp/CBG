@@ -217,10 +217,8 @@ template<class T> struct wyhash : private wyhash_internal::wyhash_IMPL
 {
 	static constexpr uint64_t _wyp4 = UINT64_C(0x1d8e4e27c47d124f);
 
-	wyhash() noexcept : wyhash_internal::wyhash_IMPL()
-	{}
-	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed)
-	{}
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL(){}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed){}
 
 	template<size_t len = sizeof(T)> uint64_t operator()(const T& elem) const noexcept
 	{
@@ -271,28 +269,131 @@ template<class T> struct wyhash : private wyhash_internal::wyhash_IMPL
 // Partial specialization
 template<> struct wyhash<std::string> : private wyhash_internal::wyhash_IMPL
 {
-	wyhash() noexcept : wyhash_internal::wyhash_IMPL()
-	{}
-	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed)
-	{}
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL(){}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed){}
 
 	uint64_t operator()(const std::string& data) const noexcept
 	{
-		return hash(data.c_str(), data.length());
+		return hash(data.data(), data.length());
+	}
+};
+template<> struct wyhash<std::wstring> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::wstring& data) const noexcept
+	{
+		return hash(data.data(), sizeof(wchar_t) * data.length());
+	}
+};
+template<> struct wyhash<std::u16string> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::u16string& data) const noexcept
+	{
+		return hash(data.data(), sizeof(char16_t) * data.length());
+	}
+};
+template<> struct wyhash<std::u32string> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::u32string& data) const noexcept
+	{
+		return hash(data.data(), sizeof(char32_t) * data.length());
 	}
 };
 template<> struct wyhash<char*> : private wyhash_internal::wyhash_IMPL
 {
-	wyhash() noexcept : wyhash_internal::wyhash_IMPL()
-	{}
-	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed)
-	{}
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL(){}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed){}
 
 	uint64_t operator()(const char* data) const noexcept
 	{
 		return hash(data, strlen(data));
 	}
 };
+
+#if __cplusplus >= 201703L// C++ 2017
+template<> struct wyhash<std::string_view> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL(){}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed){}
+
+	uint64_t operator()(const std::string_view& data) const noexcept
+	{
+		return hash(data.data(), data.length());
+	}
+};
+template<> struct wyhash<std::pmr::string> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::pmr::string& data) const noexcept
+	{
+		return hash(data.data(), data.length());
+	}
+};
+template<> struct wyhash<std::pmr::wstring> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::pmr::wstring& data) const noexcept
+	{
+		return hash(data.data(), sizeof(wchar_t) * data.length());
+	}
+};
+template<> struct wyhash<std::pmr::u16string> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::pmr::u16string& data) const noexcept
+	{
+		return hash(data.data(), sizeof(char16_t) * data.length());
+	}
+};
+template<> struct wyhash<std::pmr::u32string> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::pmr::u32string& data) const noexcept
+	{
+		return hash(data.data(), sizeof(char32_t) * data.length());
+	}
+};
+#endif
+
+// TODO: Consider using  __cpp_char8_t?
+#if __cplusplus >= 202001L// C++ 2020
+template<> struct wyhash<std::u8string> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::u8string& data) const noexcept
+	{
+		return hash(data.data(), sizeof(char8_t) * data.length());
+	}
+};
+template<> struct wyhash<std::pmr::u8string> : private wyhash_internal::wyhash_IMPL
+{
+	wyhash() noexcept : wyhash_internal::wyhash_IMPL() {}
+	wyhash(uint64_t seed) noexcept : wyhash_internal::wyhash_IMPL(seed) {}
+
+	uint64_t operator()(const std::pmr::u8string& data) const noexcept
+	{
+		return hash(data.data(), sizeof(char8_t) * data.length());
+	}
+};
+#endif
 }// end namespace hashing
 
 // Search Hint

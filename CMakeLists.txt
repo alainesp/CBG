@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 3.1)
 project(cbg)
 
 # Pick the C++ standard to compile with.
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_STANDARD 14)
 
 ############################################################
@@ -16,7 +17,7 @@ add_library(cbg INTERFACE)
 target_include_directories(cbg INTERFACE ${PROJECT_SOURCE_DIR})
 
 ############################################################
-# Create an benchmark executable
+# Create a benchmark executable
 ############################################################
 
 # Source
@@ -31,3 +32,9 @@ add_subdirectory(comparison/abseil-cpp)
 add_subdirectory(comparison/benchmark)
 # link
 target_link_libraries(comparison PRIVATE cbg absl::flat_hash_map absl::flat_hash_set benchmark benchmark_main)
+
+############################################################
+# Testing
+############################################################
+
+# ...TODO...
